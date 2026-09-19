@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import ScrollReveal from "../components/ui/ScrollReveal";
 import TypewriterWord from "../components/ui/TypewriterWord";
-import hppchriImg from "../assets/hppchri-v2.png";
-import bikanervalaImg from "../assets/bikanervala-visual.jpg";
-import wakhraImg from "../assets/wakhra-swaad-visual.jpg";
-import seeCityImg from "../assets/see-city-visual.jpg";
+const hppchriImg = "/image/1.jpeg";
+const bikanervalaImg = "/image/2.jpeg";
+const wakhraImg = "/image/3.jpeg";
+const seeCityImg = "/image/4.jpeg";
 
 // ─── Real Client Stories Data ───────────────────────────────────────────────────
 const editorialStories = [
@@ -96,8 +96,6 @@ const editorialStories = [
 
 // ─── Individual Editorial Story Section ────────────────────────────────────────
 function EditorialStorySection({ story }) {
-  const isReverse = story.direction === "text-left";
-
   return (
     <section className={`ed-review-section ${story.theme}`} id={`story-${story.num}`}>
       <div className="wrap">
@@ -118,10 +116,12 @@ function EditorialStorySection({ story }) {
           {/* Thin Divider */}
           <div className="ed-divider" />
 
-          {/* Asymmetric 2-Column Grid */}
-          <div className={`ed-story-grid${isReverse ? " ed-reverse" : ""}`}>
-            {/* Media Column — Direct Image with Tight Frame */}
-            <div className="ed-media-col">
+          {/* Two-Column Review Grid */}
+          <div className="ed-review-grid">
+
+            {/* ── LEFT COLUMN: Image + What We Worked On ── */}
+            <div className="ed-review-left">
+              {/* Portrait Image */}
               <div className="ed-image-container">
                 <img
                   src={story.image}
@@ -134,11 +134,21 @@ function EditorialStorySection({ story }) {
                 <span className="ed-caption-dot" />
                 {story.imageCaption}
               </div>
+
+              {/* What We Worked On — directly below image */}
+              <div className="ed-worked-on-block">
+                <div className="ed-block-label">What we worked on</div>
+                <ul className="ed-work-items-list">
+                  {story.workItems.map((item) => (
+                    <li key={item} className="ed-work-item">{item}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
-            {/* Editorial Text Column */}
-            <div className="ed-text-col">
-              {/* Testimonial */}
+            {/* ── RIGHT COLUMN: Review + Attribution + Outcome ── */}
+            <div className="ed-review-right">
+              {/* Full Client Review */}
               <blockquote className="ed-quote">
                 &ldquo;{story.quote}&rdquo;
               </blockquote>
@@ -152,24 +162,8 @@ function EditorialStorySection({ story }) {
               {/* Sub Divider */}
               <div className="ed-sub-divider" />
 
-              {/* What We Worked On */}
-              <div className="ed-block">
-                <div className="ed-block-label">What we worked on</div>
-                <div className="ed-work-list">
-                  {story.workItems.map((item, idx) => (
-                    <span key={item}>
-                      {idx > 0 && <span className="ed-work-sep">·</span>}
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Sub Divider */}
-              <div className="ed-sub-divider" />
-
               {/* Project Outcome */}
-              <div className="ed-block" style={{ marginBottom: 0 }}>
+              <div className="ed-outcome-block">
                 <div className="ed-block-label">Project Outcome</div>
                 <div className="ed-metrics-row">
                   {story.metrics.map((m) => (
@@ -181,12 +175,14 @@ function EditorialStorySection({ story }) {
                 </div>
               </div>
             </div>
+
           </div>
         </ScrollReveal>
       </div>
     </section>
   );
 }
+
 
 // ─── Main Insights / Reviews Page ─────────────────────────────────────────────
 export default function Blog() {

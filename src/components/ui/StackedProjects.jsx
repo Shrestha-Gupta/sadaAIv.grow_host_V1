@@ -1,6 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import hppchriImg from "../../assets/hppchri-v2.png";
+import bikanervalaImg from "../../assets/bikanervala-visual.jpg";
+import wakhraImg from "../../assets/wakhra-swaad-visual.jpg";
+import seeCityImg from "../../assets/see-city-visual.jpg";
 import { renderMetricText } from "./ProjectCard";
 
 const cardPalettes = [
@@ -211,6 +214,14 @@ export default function StackedProjects({ projects = [] }) {
                         <div className="port-screenshot-wrap">
                           <img
                             src={hppchriImg}
+                            alt={proj.title}
+                            className="port-screenshot-img"
+                          />
+                        </div>
+                      ) : proj.image ? (
+                        <div className="port-screenshot-wrap">
+                          <img
+                            src={proj.image}
                             alt={proj.title}
                             className="port-screenshot-img"
                           />

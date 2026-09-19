@@ -4,10 +4,10 @@ import CubeReveal from "../components/ui/CubeReveal";
 import TypewriterWord from "../components/ui/TypewriterWord";
 import { team } from "../data/content";
 import member1Img from "../assets/I1.jpeg";
-import member2Img from "../assets/I2.png";
-import member3Img from "../assets/i3-fixed.jpg";
+const member2Img = "/image/Sg.png";
+const member3Img = "/image/AK.png";
 
-const LINKEDIN = "https://www.linkedin.com/company/sadaaiv-grow";
+
 
 export default function About() {
   return (
@@ -99,7 +99,7 @@ export default function About() {
                   role: "Founder & Strategy",
                   desc: "Sets the direction, owns the vision and leads every client engagement from the front.",
                   img: member1Img,
-                  linkedin: "https://www.linkedin.com/in/shiva-rai/",
+                  email: "shivamraianil@gmail.com",
                   index: "01",
                   rotated: false,
                   objPosition: "center 15%",
@@ -109,7 +109,7 @@ export default function About() {
                   role: "Full Stack Developer",
                   desc: "Architects and builds the technology systems that make execution possible.",
                   img: member2Img,
-                  linkedin: "https://www.linkedin.com/in/shrestha01gupta",
+                  email: "shrestha01gupta@gmail.com",
                   index: "02",
                   rotated: false,
                 },
@@ -118,7 +118,7 @@ export default function About() {
                   role: "Design Lead",
                   desc: "Shapes how every product, campaign and deliverable is seen and experienced.",
                   img: member3Img,
-                  linkedin: "https://www.linkedin.com/in/alok-kumar-6374aa299/",
+                  email: "arav8172@gmail.com",
                   index: "03",
                   rotated: false,
                   objPosition: "center 20%",
@@ -139,12 +139,10 @@ export default function About() {
                       <div className="tl-role">{member.role}</div>
                       <p className="tl-desc">{member.desc}</p>
                       <a
-                        href={member.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href={`mailto:${member.email}`}
                         className="tl-linkedin"
                       >
-                        LinkedIn &rarr;
+                        {member.email}
                       </a>
                     </div>
                   </div>

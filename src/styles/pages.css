@@ -112,10 +112,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 16px 24px 24px;
+  padding: 16px 24px 44px;
   box-sizing: border-box;
   z-index: 2;
-  overflow: hidden;
+  overflow: visible;
 }
 .stacked-sticky-pin > .wrap {
   position: relative;
@@ -1666,10 +1666,45 @@
 
 @media (max-width: 700px) {
   .meth-timeline::before { left: 20px; }
-  .meth-row { grid-template-columns: 40px 1fr; grid-template-rows: auto; }
-  .meth-content { padding: 20px 16px; }
-  .meth-content[style*="visibility: hidden"] { display: none; }
+
+  /* 2-col layout: dot column (40px) + content column (1fr) */
+  .meth-row {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    grid-template-rows: auto;
+    align-items: start;
+  }
+
+  /* Remove the hidden placeholder column from the layout entirely */
+  .meth-content--hidden {
+    display: none !important;
+  }
+
+  /* Dot always sits in column 1, row 1 */
+  .meth-spine {
+    grid-column: 1;
+    grid-row: 1;
+    justify-content: center;
+    padding-top: 18px;
+  }
+
+  /* Visible content always flows into column 2, row 1 */
+  .meth-content--visible {
+    grid-column: 2;
+    grid-row: 1;
+    padding: 12px 16px 20px 16px;
+    text-align: left !important;
+  }
+
+  /* On mobile, override the JS translateX with a subtle translateY so content
+     never slides off-screen horizontally. Opacity animation still plays fully. */
+  .meth-content--visible[style*="translateX(-90px)"],
+  .meth-content--visible[style*="translateX(90px)"] {
+    transform: translateY(10px) !important;
+  }
+
   .meth-num { font-size: 32px; }
+  .meth-body { max-width: 100%; }
 }
 
 /* ===================================================
@@ -2201,28 +2236,30 @@
 }
 
 /* Asymmetric 2-Column Composition Grid */
-.ed-story-grid {
+/* ─── TWO-COLUMN REVIEW GRID ─────────────────────────────────────────────────── */
+
+/* Main two-column grid: 42% left / 58% right */
+.ed-review-grid {
   display: grid;
-  grid-template-columns: 1fr 1.08fr;
-  gap: 64px;
+  grid-template-columns: 42fr 58fr;
+  gap: 60px;
   align-items: start;
 }
-.ed-story-grid.ed-reverse {
-  grid-template-columns: 1.08fr 1fr;
-}
-.ed-story-grid.ed-reverse .ed-media-col {
-  order: 2;
-}
-.ed-story-grid.ed-reverse .ed-text-col {
-  order: 1;
-}
 
-/* Media Column — NO HUGE EMPTY PASTEL CANVAS */
-.ed-media-col {
+/* LEFT COLUMN: image + what we worked on */
+.ed-review-left {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0;
 }
+
+/* RIGHT COLUMN: review + attribution + outcome (flex column, no min-height tricks) */
+.ed-review-right {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── IMAGE ──────────────────────────────────────────────────────────────────── */
 .ed-image-container {
   width: 100%;
   border-radius: 6px;
@@ -2242,9 +2279,9 @@
 .ed-image {
   width: 100%;
   height: auto;
-  aspect-ratio: 16/11;
+  aspect-ratio: 3/4;
   object-fit: cover;
-  object-position: top center;
+  object-position: center center;
   display: block;
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -2258,6 +2295,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-top: 10px;
 }
 .ed-theme-dark .ed-image-caption {
   color: rgba(250, 248, 245, 0.45);
@@ -2271,22 +2309,52 @@
   border-radius: 50%;
   background: var(--accent);
   display: inline-block;
+  flex-shrink: 0;
 }
 
-/* Text / Editorial Column */
-.ed-text-col {
+/* ─── WHAT WE WORKED ON (left column, below image) ──────────────────────────── */
+.ed-worked-on-block {
+  margin-top: 32px;
+}
+.ed-work-items-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
+  column-gap: 24px;
+  row-gap: 8px;
+}
+.ed-work-item {
+  font-size: 14px;
+  line-height: 1.5;
+  padding-left: 14px;
+  position: relative;
+}
+.ed-work-item::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 600;
+}
+.ed-theme-dark .ed-work-item {
+  color: rgba(250, 248, 245, 0.75);
+}
+.ed-theme-light .ed-work-item {
+  color: var(--ink-2);
 }
 
-/* Editorial Testimonial Quote */
+/* ─── QUOTE (right column, top) ─────────────────────────────────────────────── */
 .ed-quote {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-style: italic;
-  font-size: clamp(20px, 2.3vw, 27px);
-  line-height: 1.55;
-  letter-spacing: -0.015em;
-  margin-bottom: 24px;
+  font-family: 'Inter', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-style: normal;
+  font-size: clamp(16px, 1.7vw, 21px);
+  line-height: 1.75;
+  letter-spacing: -0.005em;
+  font-weight: 400;
+  margin-bottom: 28px;
 }
 .ed-theme-dark .ed-quote {
   color: #FAF8F5;
@@ -2295,9 +2363,9 @@
   color: var(--ink);
 }
 
-/* Attribution */
+/* ─── ATTRIBUTION ────────────────────────────────────────────────────────────── */
 .ed-attribution {
-  margin-bottom: 36px;
+  margin-bottom: 32px;
 }
 .ed-author-name {
   font-size: 15px;
@@ -2322,7 +2390,7 @@
   color: var(--ink-2);
 }
 
-/* Thin Section Divider inside content */
+/* ─── THIN DIVIDER ───────────────────────────────────────────────────────────── */
 .ed-sub-divider {
   width: 100%;
   height: 1px;
@@ -2335,10 +2403,7 @@
   background: var(--line);
 }
 
-/* What We Worked On — Pure Editorial Inline Typography */
-.ed-block {
-  margin-bottom: 28px;
-}
+/* ─── BLOCK LABEL (shared: worked on + outcome) ─────────────────────────────── */
 .ed-block-label {
   font-family: 'IBM Plex Mono', monospace, sans-serif;
   font-size: 11px;
@@ -2346,25 +2411,13 @@
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 10px;
-}
-.ed-work-list {
-  font-size: 14.5px;
-  line-height: 1.65;
-}
-.ed-theme-dark .ed-work-list {
-  color: rgba(250, 248, 245, 0.75);
-}
-.ed-theme-light .ed-work-list {
-  color: var(--ink-2);
-}
-.ed-work-sep {
-  color: var(--accent);
-  margin: 0 8px;
-  font-weight: 700;
+  margin-bottom: 12px;
 }
 
-/* Outcome Metrics — Clean Minimal Editorial Row */
+/* ─── PROJECT OUTCOME (right column, bottom) ─────────────────────────────────── */
+.ed-outcome-block {
+  /* sits naturally at bottom of right column flow */
+}
 .ed-metrics-row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2377,12 +2430,13 @@
   gap: 4px;
 }
 .ed-metric-num {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(24px, 2.8vw, 34px);
-  font-weight: 600;
+  font-family: 'Inter', 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 700;
   color: var(--accent);
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
+  font-style: normal;
 }
 .ed-metric-label {
   font-size: 12px;
@@ -2395,6 +2449,26 @@
 .ed-theme-light .ed-metric-label {
   color: var(--ink-3);
 }
+
+/* ─── RESPONSIVE: stack to single column on narrow screens ──────────────────── */
+@media (max-width: 860px) {
+  .ed-review-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .ed-metrics-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+@media (max-width: 480px) {
+  .ed-metrics-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
+
 
 /* Final CTA — Minimal Editorial Closing Section */
 .ed-cta-section {
@@ -2437,26 +2511,11 @@
 
 /* Responsive adjustments */
 @media (max-width: 960px) {
-  .ed-story-grid,
-  .ed-story-grid.ed-reverse {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  .ed-story-grid.ed-reverse .ed-media-col {
-    order: 0;
-  }
-  .ed-story-grid.ed-reverse .ed-text-col {
-    order: 1;
-  }
   .ed-review-section {
     padding: 72px 0 80px;
   }
   .ed-divider {
     margin-bottom: 36px;
-  }
-  .ed-metrics-row {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
   }
 }
 @media (max-width: 640px) {
@@ -2471,17 +2530,11 @@
   .ed-story-num {
     font-size: 38px;
   }
-  .ed-quote {
-    font-size: 18px;
-  }
-  .ed-metrics-row {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
   .ed-cta-section {
     padding: 80px 0 90px;
   }
 }
+
 
 /* ===================================================
    TEAM SECTION — Premium Editorial Redesign

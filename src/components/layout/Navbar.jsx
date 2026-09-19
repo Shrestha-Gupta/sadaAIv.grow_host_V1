@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import logoImg from "../../assets/logo.png";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -16,6 +15,7 @@ export default function Navbar() {
   useEffect(() => { setMenuOpen(false); }, [pathname]);
 
   const links = [
+    { to: "/", label: "Home" },
     { to: "/services", label: "Services" },
     { to: "/portfolio", label: "Portfolio" },
     { to: "/about", label: "About" },
@@ -27,7 +27,7 @@ export default function Navbar() {
       <nav className={`navbar${scrolled ? " scrolled" : ""}`}>
         <div className="navbar-inner">
           <Link to="/" className="navbar-logo">
-            <img src={logoImg} alt="sadaAIv.grow" className="navbar-logo-img" />
+            <img src="/sadaAIv Logo_Black.png" alt="sadaAIv.grow" className="navbar-logo-img" />
           </Link>
           <ul className="navbar-links">
             {links.map((l) => (

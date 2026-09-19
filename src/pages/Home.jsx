@@ -255,7 +255,7 @@ function MethodologyStep({ step, index }) {
     <div ref={ref} className="meth-row">
       {/* Left content */}
       <div
-        className="meth-content"
+        className={`meth-content${isLeft ? ' meth-content--visible' : ' meth-content--hidden'}`}
         style={{
           opacity: visible ? 1 : 0,
           transform: visible
@@ -291,7 +291,7 @@ function MethodologyStep({ step, index }) {
 
       {/* Right content */}
       <div
-        className="meth-content"
+        className={`meth-content${!isLeft ? ' meth-content--visible' : ' meth-content--hidden'}`}
         style={{
           opacity: visible ? 1 : 0,
           transform: visible
@@ -358,13 +358,13 @@ export default function HomePage() {
               <Link to="/services" className="btn btn-outline">See what we do</Link>
             </div>
             <div className="hero-stats">
-              <div className="hero-stat"><span className="hero-stat-num">70<em>+</em></span><span className="hero-stat-label">Businesses served</span></div>
+              <div className="hero-stat"><span className="hero-stat-num"><span style={{color:'var(--accent)'}}>21</span><span style={{fontStyle:'normal'}}>+</span></span><span className="hero-stat-label">Businesses served</span></div>
               <div className="hero-stat-div" />
-              <div className="hero-stat"><span className="hero-stat-num">7<em>+</em></span><span className="hero-stat-label">Service lines</span></div>
+              <div className="hero-stat"><span className="hero-stat-num"><span style={{color:'var(--accent)'}}>7</span><span style={{fontStyle:'normal'}}>+</span></span><span className="hero-stat-label">Service lines</span></div>
               <div className="hero-stat-div" />
               <div className="hero-stat"><span className="hero-stat-num"><em>AI</em> first</span><span className="hero-stat-label">Every engagement</span></div>
               <div className="hero-stat-div" />
-              <div className="hero-stat"><span className="hero-stat-num">Tech <em>+</em> People</span><span className="hero-stat-label">Integrated execution</span></div>
+              <div className="hero-stat"><span className="hero-stat-num"><span style={{color:'var(--accent)'}}>Tech</span> <span style={{fontStyle:'normal'}}>+</span> <span style={{color:'var(--accent)'}}>People</span></span><span className="hero-stat-label">Integrated execution</span></div>
               <div className="hero-stat-div" />
               <div className="hero-stat"><span className="hero-stat-num"><em>End-to-end</em></span><span className="hero-stat-label">Not just consulting</span></div>
             </div>

@@ -1,3 +1,7 @@
+import bikanervalaImg from "../assets/bikanervala-visual.jpg";
+import wakhraImg from "../assets/wakhra-swaad-visual.jpg";
+import seeCityImg from "../assets/see-city-visual.jpg";
+
 export const services = {
   build: [
     {
@@ -75,6 +79,7 @@ export const portfolio = [
     ],
     bg: "#FFF8ED",
     color: "#C85D0A",
+    image: bikanervalaImg,
   },
   {
     id: 3,
@@ -91,6 +96,7 @@ export const portfolio = [
     ],
     bg: "#F2FBCC",
     color: "#5A6D00",
+    image: wakhraImg,
   },
   {
     id: 4,
@@ -107,6 +113,7 @@ export const portfolio = [
     ],
     bg: "#E8F4FF",
     color: "#1A5FA8",
+    image: seeCityImg,
   },
 ];
 
