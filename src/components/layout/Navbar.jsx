@@ -57,7 +57,6 @@ export default function Navbar() {
       </nav>
       {/* Mobile menu */}
       <div className={`mobile-menu${menuOpen ? " open" : ""}`}>
-        <Link to="/">Home</Link>
         {links.map((l) => <Link key={l.to} to={l.to}>{l.label}</Link>)}
         <Link to="/contact" style={{ color: "var(--accent)" }}>Let us talk</Link>
       </div>
