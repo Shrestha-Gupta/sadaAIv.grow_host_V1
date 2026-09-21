@@ -37,7 +37,7 @@ export default function Contact() {
     setErrors({});
     setStatus("sending");
     try {
-      await emailjs.sendForm("service_sadaAIv.grow", "template_peed988", form, "qz0oEE_3CXvyOxIxR");
+      await emailjs.sendForm("service_sadaAIv", "template_peed988", form, "qz0oEE_3CXvyOxIxR");
       setStatus("success");
       form.reset();
     } catch (err) {
